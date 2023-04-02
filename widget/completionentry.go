@@ -15,6 +15,8 @@ type CompletionEntry struct {
 	pause         bool
 	itemHeight    float32
 
+	OnKeyTyped func(key *fyne.KeyEvent)
+
 	CustomCreate func() fyne.CanvasObject
 	CustomUpdate func(id widget.ListItemID, object fyne.CanvasObject)
 }
@@ -24,6 +26,17 @@ func NewCompletionEntry(options []string) *CompletionEntry {
 	c := &CompletionEntry{Options: options}
 	c.ExtendBaseWidget(c)
 	return c
+}
+
+func (c *CompletionEntry) TypedKey(key *fyne.KeyEvent) {
+	if c.OnKeyTyped != nil {
+		c.OnKeyTyped(key)
+	}
+	c.Entry.TypedKey(key)
+}
+
+func (c *CompletionEntry) IsSelected() bool {
+	return !(c.navigableList.selected == -1)
 }
 
 // HideCompletion hides the completion menu.
