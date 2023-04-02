@@ -35,8 +35,8 @@ func (c *CompletionEntry) TypedKey(key *fyne.KeyEvent) {
 	c.Entry.TypedKey(key)
 }
 
-func (c *CompletionEntry) IsSelected() bool {
-	return !(c.navigableList.selected == -1)
+func (c *CompletionEntry) SelectedId() int {
+	return c.navigableList.selected
 }
 
 // HideCompletion hides the completion menu.
